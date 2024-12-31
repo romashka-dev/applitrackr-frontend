@@ -1,4 +1,11 @@
+import Spinner from '@/components/ui/Spinner'
+
 const JobPage = () => {
-  return <h1 className="text-4xl">Jobs Page</h1>
+  return (
+    <div className="flex items-center justify-center">
+      <Spinner />
+      <h2 className="text-lg font-semibold ml-3">Work in progress!</h2>
+    </div>
+  )
 }
 export default JobPage
