@@ -1,4 +1,4 @@
-import { Control } from 'react-hook-form'
+import { Control, FieldValues } from 'react-hook-form'
 import {
   Select,
   SelectContent,
@@ -17,7 +17,7 @@ import { Input } from '../Input'
 
 type CustomFormFieldProps = {
   name: string
-  control: Control<any>
+  control: Control<FieldValues>
 }
 
 const CustomFormField = ({ name, control }: CustomFormFieldProps) => {
@@ -42,7 +42,7 @@ const CustomFormField = ({ name, control }: CustomFormFieldProps) => {
 
 type CustomFormSelectProps = {
   name: string
-  control: Control<any>
+  control: Control<FieldValues>
   items: string[]
   labelText?: string
 }
