@@ -3,7 +3,7 @@ import Logo from '../../../assets/logo.svg'
 import links from '@/utils/links'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from '../button'
+import { Button } from '../Button/Button'
 import { usePathname } from 'next/navigation'
 
 const Sidebar = () => {
@@ -30,4 +30,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export { Sidebar }

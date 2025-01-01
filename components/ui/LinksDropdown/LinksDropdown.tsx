@@ -3,9 +3,9 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../../ui/dropdown-menu'
+} from '../DropDownMenu.tsx'
 import { AlignLeft } from 'lucide-react'
-import { Button } from '../button'
+import { Button } from '../Button/Button'
 import links from '@/utils/links'
 import Link from 'next/link'
 
@@ -37,4 +37,4 @@ const LinksDropdown = () => {
   )
 }
 
-export default LinksDropdown
+export { LinksDropdown }

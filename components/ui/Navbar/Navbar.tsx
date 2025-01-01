@@ -1,6 +1,6 @@
-import LinksDropdown from '../LinksDropdown'
+import { LinksDropdown } from '../LinksDropdown'
 import { UserButton } from '@clerk/nextjs'
-import ThemeToggle from '../ThemeToggle'
+import { ModeToggle } from '../ThemeToggle'
 
 const Navbar = () => {
   return (
@@ -9,11 +9,11 @@ const Navbar = () => {
         <LinksDropdown />
       </div>
       <div className="flex items-center gap-x-4">
-        <ThemeToggle />
+        <ModeToggle />
         <UserButton afterSignOutUrl="/" />
       </div>
     </nav>
   )
 }
 
-export default Navbar
+export { Navbar }

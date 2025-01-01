@@ -1,1 +1,1 @@
-export { default } from './ThemeToggle'
+export { ModeToggle } from './ThemeToggle'

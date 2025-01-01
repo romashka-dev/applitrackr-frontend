@@ -1,4 +1,4 @@
-import CreateJobForm from '@/components/ui/CreateJobForm'
+import { CreateJobForm } from '../../../components/ui/CreateJobForm'
 
 const AddJobPage = () => {
   return (

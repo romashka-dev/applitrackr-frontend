@@ -1,6 +1,6 @@
 'use client'
 
-import ThemeProvider from '@/components/ui/ThemeProvider'
+import { ThemeProvider } from '@/components/ui/ThemeProvider'
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -17,4 +17,4 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default Providers
+export { Providers }
