@@ -38,21 +38,30 @@ const CreateJobForm = () => {
         <h2 className="capitalize font-semibold text-4xl mb-6">add job</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-start">
           {/* position */}
-          <CustomFormField name="position" control={form.control} />
+          <CustomFormField<CreateAndEditJobType>
+            name="position"
+            control={form.control}
+          />
           {/* company */}
-          <CustomFormField name="company" control={form.control} />
+          <CustomFormField<CreateAndEditJobType>
+            name="company"
+            control={form.control}
+          />
           {/* location */}
-          <CustomFormField name="location" control={form.control} />
+          <CustomFormField<CreateAndEditJobType>
+            name="location"
+            control={form.control}
+          />
 
           {/* job status */}
-          <CustomFormSelect
+          <CustomFormSelect<CreateAndEditJobType>
             name="status"
             control={form.control}
-            labelText="job status"
+            labelText="Job status"
             items={Object.values(JobStatus)}
           />
           {/* job mode */}
-          <CustomFormSelect
+          <CustomFormSelect<CreateAndEditJobType>
             name="mode"
             control={form.control}
             labelText="job mode"

@@ -1,4 +1,4 @@
-import { Control, FieldValues } from 'react-hook-form'
+import { Control, FieldValues, Path } from 'react-hook-form'
 import {
   Select,
   SelectContent,
@@ -15,81 +15,69 @@ import {
 } from '../Form'
 import { Input } from '../Input'
 
-type CustomFormFieldProps = {
-  name: string
-  control: Control<FieldValues>
+type CustomFormFieldProps<T extends FieldValues> = {
+  name: Path<T>
+  control: Control<T>
 }
 
-const CustomFormField = ({ name, control }: CustomFormFieldProps) => {
+const CustomFormField = <T extends FieldValues>({
+  name,
+  control,
+}: CustomFormFieldProps<T>) => {
   return (
-    <>
-      <FormField
-        control={control}
-        name={name}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="capitalize">{name}</FormLabel>
-            <FormControl>
-              <Input {...field} />
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-    </>
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel className="capitalize">{name}</FormLabel>
+          <FormControl>
+            <Input {...field} />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
   )
 }
 
-type CustomFormSelectProps = {
-  name: string
-  control: Control<FieldValues>
-  items: string[]
+type CustomFormSelectProps<T extends FieldValues> = {
+  name: Path<T>
+  control: Control<T>
+  items: Array<string>
   labelText?: string
 }
 
-const CustomFormSelect = ({
+const CustomFormSelect = <T extends FieldValues>({
   name,
   control,
   items,
   labelText,
-}: CustomFormSelectProps) => {
+}: CustomFormSelectProps<T>) => {
   return (
-    <>
-      <FormField
-        control={control}
-        name={name}
-        render={({ field }) => {
-          return (
-            <>
-              <FormItem>
-                <FormLabel className="capitalize">
-                  {labelText || name}
-                </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {items.map((item) => {
-                      return (
-                        <SelectItem key={item} value={item}>
-                          {item}
-                        </SelectItem>
-                      )
-                    })}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            </>
-          )
-        }}
-      ></FormField>
-    </>
+    <FormField
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel className="capitalize">{labelText || name}</FormLabel>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent>
+              {items.map((item) => (
+                <SelectItem key={item} value={item}>
+                  {item}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </FormItem>
+      )}
+    />
   )
 }
 
