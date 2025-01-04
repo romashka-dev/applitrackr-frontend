@@ -1,19 +1,21 @@
 'use client'
 
+import axios from 'axios'
+import { AxiosError } from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-
 import {
   JobStatus,
   JobMode,
   createAndEditJobSchema,
   CreateAndEditJobType,
 } from '@/utils/types'
-
 import { Button } from '../Button'
 import { Form } from '../Form'
-
 import { CustomFormField, CustomFormSelect } from '../FormComponents'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useToast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
 
 const CreateJobForm = () => {
   // 1. Define your form.
@@ -28,8 +30,52 @@ const CreateJobForm = () => {
     },
   })
 
-  const onSubmit = (value: CreateAndEditJobType) => {
-    console.log(value)
+  const queryClient = useQueryClient()
+  const { toast } = useToast()
+  const router = useRouter()
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (values: CreateAndEditJobType) => {
+      console.log('Values sent:', values)
+      const response = await axios.post(
+        'http://localhost:3000/api/jobs',
+        values,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true, // Если необходимо передавать cookies
+        }
+      )
+      return response.data
+    },
+    onSuccess: (data) => {
+      if (!data) {
+        toast({
+          description: 'There was an error creating the job',
+        })
+        return
+      }
+      toast({ description: 'Job created successfully' })
+      queryClient.invalidateQueries({ queryKey: ['jobs'] })
+      queryClient.invalidateQueries({ queryKey: ['stats'] })
+      queryClient.invalidateQueries({ queryKey: ['charts'] })
+
+      router.push('/jobs')
+      form.reset()
+    },
+    onError: (error) => {
+      console.log(error)
+
+      toast({
+        description:
+          (error as AxiosError).response?.statusText || 'An error occurred',
+      })
+    },
+  })
+
+  const onSubmit = (values: CreateAndEditJobType) => {
+    mutate(values)
   }
 
   return (
@@ -67,8 +113,12 @@ const CreateJobForm = () => {
             labelText="job mode"
             items={Object.values(JobMode)}
           />
-          <Button type="submit" className="self-end capitalize">
-            create job
+          <Button
+            type="submit"
+            className="self-end capitalize"
+            disabled={isPending}
+          >
+            {isPending ? 'loading' : 'create job'}
           </Button>
         </div>
       </form>
