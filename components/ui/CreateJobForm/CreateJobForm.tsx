@@ -16,9 +16,11 @@ import { CustomFormField, CustomFormSelect } from '../FormComponents'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useToast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@clerk/nextjs'
 
 const CreateJobForm = () => {
-  // 1. Define your form.
+  const { getToken } = useAuth()
+
   const form = useForm<CreateAndEditJobType>({
     resolver: zodResolver(createAndEditJobSchema),
     defaultValues: {
@@ -37,16 +39,25 @@ const CreateJobForm = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (values: CreateAndEditJobType) => {
       console.log('Values sent:', values)
+
+      const token = await getToken()
+
+      if (!token) {
+        throw new Error('User is not authenticated')
+      }
+
       const response = await axios.post(
-        'http://localhost:3000/api/jobs',
+        'https://applitrackr-api.vercel.app/api/jobs',
         values,
         {
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
-          withCredentials: true, // Если необходимо передавать cookies
+          withCredentials: true,
         }
       )
+
       return response.data
     },
     onSuccess: (data) => {
@@ -83,30 +94,24 @@ const CreateJobForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="bg-muted p-8">
         <h2 className="capitalize font-semibold text-4xl mb-6">add job</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-start">
-          {/* position */}
           <CustomFormField<CreateAndEditJobType>
             name="position"
             control={form.control}
           />
-          {/* company */}
           <CustomFormField<CreateAndEditJobType>
             name="company"
             control={form.control}
           />
-          {/* location */}
           <CustomFormField<CreateAndEditJobType>
             name="location"
             control={form.control}
           />
-
-          {/* job status */}
           <CustomFormSelect<CreateAndEditJobType>
             name="status"
             control={form.control}
             labelText="Job status"
             items={Object.values(JobStatus)}
           />
-          {/* job mode */}
           <CustomFormSelect<CreateAndEditJobType>
             name="mode"
             control={form.control}
