@@ -1,10 +1,9 @@
-import { Spinner } from '../../../components/ui/Spinner'
+import { JobsList } from '@/components/ui/JobsList'
 
 const JobPage = () => {
   return (
-    <div className="flex items-center justify-center">
-      <Spinner />
-      <h2 className="text-lg font-semibold ml-3">Work in progress!</h2>
+    <div className="flex-col items-center justify-center">
+      <JobsList />
     </div>
   )
 }
