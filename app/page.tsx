@@ -12,14 +12,13 @@ export default function Home() {
       </header>
       <section className="max-w-6xl mx-auto px-4 sm:px-8 min-h-[calc(100vh_-_6rem)] -mt-4 grid lg:grid-cols-[1fr,456px] gap-8 items-center">
         <div className="flex flex-col items-center lg:items-start">
-          <h1 className="capitalize text-center lg:text-left text-4xl md:text-7xl font-bold ">
-            Job <span className="text-primary">tracking</span> app
+          <h1 className="mb-4 capitalize text-center lg:text-left text-4xl md:text-7xl font-bold ">
+            Smart <span className="text-primary">Job Tracking </span>
+            Made Simple
           </h1>
-          <p className="leading-loose max-w-lg mt-4 text-center lg:text-left">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
-            atque repellendus ex rerum aperiam esse, blanditiis tempore, quasi
-            similique nostrum nam voluptates accusantium possimus enim. Illum
-            eligendi iure porro corrupti.
+          <p className="mb-6 leading-loose max-w-lg text-center lg:text-left">
+            Simplify your job search with our app. Manage applications, track
+            progress, and stay ahead in your career journey effortlessly.
           </p>
           <Button asChild className="mt-4">
             <Link href="/add-job">Get Started</Link>
